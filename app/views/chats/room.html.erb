@@ -1,3 +1,28 @@
+<script>
+
+  $(function() {
+  	// create new client to connect to faye
+  	var client = new Faye.Client('http://localhost:9292/faye');
+
+  	//handle form submissions and post messages to faye
+  	$('#new_message_form').submit(function() {
+  		// publish message in channel
+  		client.publish('/messages/public', {
+  			username: '<%=session[:username] %>',
+  			msg: $('#message').val()
+  		});
+
+  		//clear the message box
+  		$('#message').val('');
+
+  		// Dont submit form
+  		return false;
+  	});
+  });
+  
+</script>  
+
+
 <div class="chat_container">
   <div id="chat_room">
     <p class="alert"> Welcome to the chat room <%= session[:username] %>! </p>
