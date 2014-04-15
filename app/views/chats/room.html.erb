@@ -4,6 +4,13 @@
   	// create new client to connect to faye
   	var client = new Faye.Client('http://localhost:9292/faye');
 
+  	// subscribe to public channel
+  	//connects to fayes server (messages/public)
+  	//provides callback to receive messages sent
+  	var public_subscription = client.subscribe('/messages/public', function(data) {
+  		$('<p></p>').html(data.username + ": " + data.msg).appendTo('#chat_room');
+  	});
+
   	//handle form submissions and post messages to faye
   	$('#new_message_form').submit(function() {
   		// publish message in channel
@@ -19,7 +26,7 @@
   		return false;
   	});
   });
-  
+
 </script>  
 
 
